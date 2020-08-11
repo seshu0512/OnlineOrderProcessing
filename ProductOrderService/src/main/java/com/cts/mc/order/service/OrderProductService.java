@@ -2,34 +2,49 @@ package com.cts.mc.order.service;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.cts.mc.order.repository.CartJsonRepository;
-import com.cts.mc.order.vo.Product;
+import com.cts.mc.order.dao.CartJsonRepository;
+import com.cts.mc.order.exception.OrderException;
+import com.cts.mc.order.model.EmailMessage;
+import com.cts.mc.order.model.Product;
 
-@RestController
-@RequestMapping("/OrderProduct")
-public class OrderProductService implements IOrderProductService{
-	CartJsonRepository cartJsonRepository = new CartJsonRepository();
+@Service
+public class OrderProductService implements IOrderProductService {
+	@Autowired
+	RestTemplate restTemplate;
+	@Autowired
+	CartJsonRepository cartJsonRepository;
+
 	@Override
-	@RequestMapping("/addToCart/{productId}")
-	public Product addProductToCart(@PathVariable int productId) {
-		
-		
-		Product product=cartJsonRepository.getProductById(productId);
+
+	public Product addProductToCart(int productId) throws OrderException {
+
+		Product product = cartJsonRepository.getProductById(productId);
 		cartJsonRepository.writeJson(product);
 		// TODO Auto-generated method stub
 		return product;
 	}
 
 	@Override
-	@RequestMapping("/listCart")
-	public List<Product> listCartProducts() {
+	public List<Product> listCartProducts() throws OrderException {
 		// TODO Auto-generated method stub
 		List<Product> cartProducts = cartJsonRepository.getProductFromCart();
 		return cartProducts;
 	}
+
+	@Override
+	public String checkoutOrders(int orderId) throws OrderException {
+		List<Product> productList = listCartProducts();
+		EmailMessage emailMessage = new EmailMessage();
+		emailMessage.setTo_address("seshu.modepalli@gmail.com");
+		emailMessage.setOrderId("12345");
+		emailMessage.setBody("Your order for the Order id: "+orderId+ " is confirmed");
+		restTemplate.getForObject("https://emailconfirmationservice/email/send",EmailMessage.class,emailMessage);
+		return "Your Order Confirmed";
+	}
+	
 
 }

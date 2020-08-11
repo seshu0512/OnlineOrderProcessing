@@ -12,31 +12,27 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-import com.cts.mc.email.vo.EmailMessage; 
+import com.cts.mc.email.exception.EmailException;
+import com.cts.mc.email.model.EmailMessage;
 
-@RestController
-@RequestMapping("/email")
-public class EmailService {
+@Service
+public class EmailService implements IEmailService{
 	@Value("${gmail.username}")
 	private String username;
 	@Value("${gmail.password}")
 	private String password;
-	
-	@RequestMapping("/send")
-	public String sendEmail(@RequestBody EmailMessage emailMessage) {
+	@Override
+	public String sendEmail(EmailMessage emailMessage) throws EmailException {
 		try {
 			sendMail(emailMessage);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new EmailException("Exception occured whlile sending email");
 		}
 		return "Email send Successfully";
 	}
-	
 	
 	private void sendMail(EmailMessage emailMessage) throws MessagingException {
 		Properties props = new Properties();
@@ -66,5 +62,4 @@ public class EmailService {
 		
 		
 	}
-
 }
