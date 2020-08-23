@@ -1,7 +1,15 @@
 package com.cts.mc.product.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Product {
-	private String productId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long productId;
 	private String productName;
 	private int stock;
 	private Double price;
@@ -11,7 +19,7 @@ public class Product {
 	public Product() {
 		super();
 	}
-	public Product(String productId ,String productName, int stock, Double price, Double offer) {
+	public Product(Long productId ,String productName, int stock, Double price, Double offer) {
 		super();
 		this.productId=productId;
 		this.productName = productName;
@@ -19,10 +27,10 @@ public class Product {
 		this.price = price;
 		this.offer = offer;
 	}
-	public String getProductId() {
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProductName() {

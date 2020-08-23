@@ -24,17 +24,17 @@ class UserServiceTest {
 		@Autowired
 		private TestRestTemplate restTemplate;
 
-		@Test
+//		@Test
 		@DisplayName("test Message REST API ")
 		void testMessage() {
 			    	User user = new User();
-			    	user.setUserId("12345");
+			    	user.setUserId(12345L);
 			    	user.setFirstName("raj");
 			    	user.setLastName("ram");
 			    	user.setDob("08-08-2020");
 			    	user.setEmail("sample.mail@gamil.com");
 			
-		 User  users = this.restTemplate.postForObject("/loanservice/applyloan",user, User.class);
+		 User  users = this.restTemplate.postForObject("/createUser",user, User.class);
 				//System.out.println("@@@@:"+message.getCustomerId());
 			assertEquals(user, users);
 		}

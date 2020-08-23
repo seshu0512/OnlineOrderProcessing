@@ -1,9 +1,16 @@
 package com.cts.mc.user.model;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+
+@Entity
 public class User {
-	private String userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long userId;
 private String firstName;
 private String lastName;
 private String dob;
@@ -11,7 +18,7 @@ private String dob;
 
 public User() {
 }
-public User(String userId ,String firstName, String lastName, String dob, String email) {
+public User(Long userId ,String firstName, String lastName, String dob, String email) {
 	super();
 	this.userId = userId;
 	this.firstName = firstName;
@@ -43,10 +50,10 @@ public String getEmail() {
 public void setEmail(String email) {
 	this.email = email;
 }
-public String getUserId() {
+public Long getUserId() {
 	return userId;
 }
-public void setUserId(String userId) {
+public void setUserId(Long userId) {
 	this.userId = userId;
 }
 private String email;

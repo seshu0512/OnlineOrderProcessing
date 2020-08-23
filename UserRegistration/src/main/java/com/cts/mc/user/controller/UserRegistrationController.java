@@ -2,6 +2,11 @@ package com.cts.mc.user.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,18 +29,26 @@ public class UserRegistrationController {
 	static Logger log = Logger.getLogger(UserRegistrationController.class.getName());
 	
 
-	@PutMapping("/createUser")
-	public User createUser(@RequestBody User user) throws UserException {
-
+	@PostMapping("/createUser")
+	public ResponseEntity<String> createUser(@RequestBody User user) throws UserException {
+		System.out.println("Adding user to Json repository for userId "+user.getUserId());
 		log.debug("Adding user to Json repository for userId "+user.getUserId());
-		 return userRegistrationService.createUser(user);
+		 userRegistrationService.createUser(user);
+		 return ResponseEntity.status(HttpStatus.CREATED).body("User Creaed Successfully");
 		
 	}
 
 	@PutMapping("/updateUser")
-	public User updateUser(@RequestBody User user) throws UserException {
+	public ResponseEntity<String> updateUser(@RequestBody User user) throws UserException {
 		log.debug("Updating existing user"+ user.getUserId());
-		return userRegistrationService.updateUser(user);
+		userRegistrationService.updateUser(user);
+		return ResponseEntity.status(HttpStatus.CREATED).body("User Creaed Successfully");
+		
+	}
+	@GetMapping("/get/{userId}")
+	public User updateUser(@PathVariable Long userId) throws UserException {
+		log.debug("getting Useerdetails for "+ userId);
+		return userRegistrationService.getUser(userId);
 		
 	}
 

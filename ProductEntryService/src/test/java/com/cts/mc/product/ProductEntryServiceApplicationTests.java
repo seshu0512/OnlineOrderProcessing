@@ -29,7 +29,7 @@ class ProductEntryServiceApplicationTests {
 		@DisplayName("test Message REST API ")
 		void testMessage() {
 			    	Product product = new Product();
-			    	product.setProductId("123345");
+			    	product.setProductId(123345L);
 			    	product.setProductName("TV");
 			    	product.setPrice(10000.0);
 			    	product.setOffer(5.0);
