@@ -22,13 +22,13 @@ public class ProductController{
 	@Autowired
 	ProductService productService;
 	
-	@PostMapping("/add/{product}")
+	@PostMapping("/addProduct")
 	public Product addProduct(@RequestBody Product product)throws ProductException {
 		log.debug("Adding product to repository "+product.getProductId());
 		return productService.addProduct(product);
 		
 	}
-	@PutMapping("/update/{product}")
+	@PutMapping("/updateProduct")
 	public Product updateProduct(@RequestBody Product product) throws ProductException{
 		log.debug("Updating product to repository "+product.getProductId());
 		return productService.updateProduct(product);

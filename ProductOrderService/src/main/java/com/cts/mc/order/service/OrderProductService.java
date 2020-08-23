@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.cts.mc.order.dao.CartJsonRepository;
 import com.cts.mc.order.dao.OrderRepository;
 import com.cts.mc.order.exception.OrderException;
 import com.cts.mc.order.model.EmailMessage;
@@ -20,25 +19,23 @@ public class OrderProductService implements IOrderProductService {
 	@Autowired
 	RestTemplate restTemplate;
 	@Autowired
-	CartJsonRepository cartJsonRepository;
-	@Autowired
 	OrderRepository orderRepository;
 
 	@Override
 
 	public Order addProductToCart(Order order) throws OrderException {
 
-		Product product=restTemplate.getForObject("http://ProductEntryService/product/get/{productId}", Product.class, order.getOrderProductId());
-
+//		Product product=restTemplate.getForObject("http://ProductEntryService/product/get/{productId}", Product.class, order.getOrderProductId());
+//
 		Order orderInCart = null ;
-		if(product.getStock()>1) {
-			order.setPrice(product.getPrice());
+//		if(product.getStock()>1) {
+//			order.setPrice(product.getPrice());
 			orderInCart=orderRepository.save(order);
-			log.debug("prodcut added to cart");
-		}
-		else {
-			log.debug("prodcut not available");
-		}
+//			log.debug("prodcut added to cart");
+//		}
+//		else {
+//			log.debug("prodcut not available");
+//		}
 		return orderInCart;
 	}
 

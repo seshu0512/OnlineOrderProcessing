@@ -16,7 +16,7 @@ import com.cts.mc.order.model.Order;
 import com.cts.mc.order.service.OrderProductService;
 
 @RestController
-@RequestMapping("/OrderProduct")
+@RequestMapping("/orderproduct")
 public class OrderProductController {
 	static Logger log = Logger.getLogger(OrderProductController.class.getName());
 	
