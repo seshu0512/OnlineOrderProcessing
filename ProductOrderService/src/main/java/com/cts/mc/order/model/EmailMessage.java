@@ -4,7 +4,7 @@ public class EmailMessage {
 	private String to_address;
 	private String subject;
 	private String body;
-	private String orderId;
+	private Long orderId;
 	public String getTo_address() {
 		return to_address;
 	}
@@ -23,10 +23,10 @@ public class EmailMessage {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public String getOrderId() {
+	public Long getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
 	
